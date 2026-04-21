@@ -65,7 +65,7 @@ if (isset($_GET['hapus'])) {
             <strong>👨‍💼 Admin Panel - MCP Marketing</strong>
         </a>
         <div class="ms-auto">
-            <a href="dashboard.php" class="btn btn-outline-light btn-sm me-2">🏠 Dashboard</a>
+           
             <a href="logout.php" class="btn btn-light btn-sm text-danger fw-bold" onclick="return confirm('Yakin ingin logout?')">🚪 Logout</a>
         </div>
     </div>

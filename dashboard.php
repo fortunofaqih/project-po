@@ -61,6 +61,44 @@ while($row = mysqli_fetch_assoc($query_bulanan)) {
             <p class="text-muted">Analisa data Purchase Order secara real-time</p>
         </div>
     </div>
+    <div class="row g-4">
+        <div class="col-md-3 mb-5">
+            <div class="card h-100 shadow-sm border-0 border-start border-primary border-4">
+                <div class="card-body text-center">
+                    <div class="display-5 mb-2">📝</div>
+                    <h5>Buat PO Baru</h5>
+                    <a href="form_po.php" class="btn btn-primary btn-sm mt-2">Buka Form</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-5">
+            <div class="card h-100 shadow-sm border-0 border-start border-success border-4">
+                <div class="card-body text-center">
+                    <div class="display-5 mb-2">📋</div>
+                    <h5>Daftar PO</h5>
+                    <a href="list_po.php" class="btn btn-success btn-sm mt-2">Lihat Data</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-5">
+            <div class="card h-100 shadow-sm border-0 border-start border-warning border-4">
+                <div class="card-body text-center">
+                    <div class="display-5 mb-2">🔐</div>
+                    <h5>Password</h5>
+                    <a href="ganti_password.php" class="btn btn-warning btn-sm mt-2">Ganti</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-5">
+            <div class="card h-100 shadow-sm border-0 border-start border-danger border-4">
+                <div class="card-body text-center">
+                    <div class="display-5 mb-2">🚪</div>
+                    <h5>Logout</h5>
+                    <a href="logout.php" class="btn btn-danger btn-sm mt-2" onclick="return confirm('Logout?')">Keluar</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="row mb-5">
         <div class="col-md-6 mb-4">
@@ -81,44 +119,7 @@ while($row = mysqli_fetch_assoc($query_bulanan)) {
         </div>
     </div>
 
-    <div class="row g-4">
-        <div class="col-md-3">
-            <div class="card h-100 shadow-sm border-0 border-start border-primary border-4">
-                <div class="card-body text-center">
-                    <div class="display-5 mb-2">📝</div>
-                    <h5>Buat PO Baru</h5>
-                    <a href="form_po.php" class="btn btn-primary btn-sm mt-2">Buka Form</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card h-100 shadow-sm border-0 border-start border-success border-4">
-                <div class="card-body text-center">
-                    <div class="display-5 mb-2">📋</div>
-                    <h5>Daftar PO</h5>
-                    <a href="list_po.php" class="btn btn-success btn-sm mt-2">Lihat Data</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card h-100 shadow-sm border-0 border-start border-warning border-4">
-                <div class="card-body text-center">
-                    <div class="display-5 mb-2">🔐</div>
-                    <h5>Password</h5>
-                    <a href="ganti_password.php" class="btn btn-warning btn-sm mt-2">Ganti</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card h-100 shadow-sm border-0 border-start border-danger border-4">
-                <div class="card-body text-center">
-                    <div class="display-5 mb-2">🚪</div>
-                    <h5>Logout</h5>
-                    <a href="logout.php" class="btn btn-danger btn-sm mt-2" onclick="return confirm('Logout?')">Keluar</a>
-                </div>
-            </div>
-        </div>
-    </div>
+    
 </div>
 
 <footer class="mt-5 pt-4 pb-4 border-top text-center text-muted small">

@@ -23,7 +23,6 @@ if (!$h) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cetak PO - <?= htmlspecialchars($h['no_po']); ?></title>
-    <link rel="icon" type="image/png" href="assets/img/logo_mcp.png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         * {
@@ -35,184 +34,90 @@ if (!$h) {
         body {
             font-family: 'Arial', sans-serif;
             background-color: #f8f9fa;
-            padding: 20px;
+            padding: 10px;
         }
 
+        /* Ukuran Kontainer untuk Layar */
         .print-container {
             background: white;
-            padding: 40px;
-            max-width: 800px;
+            padding: 20px;
+            max-width: 210mm; /* Sesuai lebar A5 Landscape */
             margin: 0 auto;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border: 1px solid #ddd;
         }
 
         .title {
             text-align: center;
-            font-size: 20px;
+            font-size: 18px;
             font-weight: bold;
             text-decoration: underline;
-            margin-bottom: 25px;
+            margin-bottom: 15px;
             text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .company-name {
-            text-align: center;
-            font-size: 14px;
-            font-weight: bold;
-            margin-bottom: 20px;
-            color: #333;
         }
 
         .info-table {
-            margin-bottom: 25px;
-            font-size: 13px;
-            width: 60%;
+            margin-bottom: 15px;
+            font-size: 12px;
+            width: 50%;
         }
 
-        .info-table tr {
-            height: 24px;
+        .info-table td {
+            padding: 2px 0;
         }
 
         .info-table td:first-child {
-            width: 120px;
-            font-weight: 600;
-            color: #333;
-        }
-
-        .info-table td:nth-child(2) {
-            padding-left: 10px;
-            color: #555;
+            width: 100px;
+            font-weight: bold;
         }
 
         table.main-table {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 30px;
+            margin-bottom: 15px;
             border: 1px solid #000;
         }
 
         table.main-table th,
         table.main-table td {
             border: 1px solid #000;
-            padding: 10px 8px;
-            font-size: 13px;
+            padding: 6px 8px;
+            font-size: 11px;
         }
 
         table.main-table th {
             text-align: center;
-            background-color: #e8e8e8;
-            font-weight: bold;
-            color: #333;
-        }
-
-        table.main-table td {
-            height: 28px;
-        }
-
-        table.main-table td:first-child {
-            text-align: center;
-            width: 5%;
-        }
-
-        table.main-table td:nth-child(2) {
-            text-align: left;
-            width: auto;
-        }
-
-        table.main-table td:nth-child(3) {
-            text-align: center;
-            width: 15%;
-        }
-
-        table.main-table td:nth-child(4) {
-            text-align: right;
-            width: 20%;
+            background-color: #f2f2f2 !important;
+            -webkit-print-color-adjust: exact;
         }
 
         .signature-container {
             width: 100%;
-            margin-top: 40px;
-            font-size: 12px;
+            margin-top: 20px;
+            font-size: 11px;
         }
 
         .sig-box {
-            width: 48%;
+            width: 40%;
             float: left;
             text-align: center;
         }
 
         .sig-box-right {
-            width: 48%;
+            width: 40%;
             float: right;
             text-align: center;
         }
 
-        .sig-box p,
-        .sig-box-right p {
-            margin-bottom: 60px;
-            font-weight: 600;
+        .sig-box p, .sig-box-right p {
+            margin-bottom: 50px;
         }
 
-        .name-tag {
-            font-weight: bold;
-            color: #333;
-            min-height: 20px;
-        }
+        .clear { clear: both; }
 
-        .clear {
-            clear: both;
-        }
-
-        .button-container {
-            margin-top: 30px;
-            text-align: center;
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .button-container button,
-        .button-container a {
-            padding: 10px 20px;
-            font-size: 14px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-block;
-            transition: all 0.3s ease;
-        }
-
-        .btn-print {
-            background-color: #0d6efd;
-            color: white;
-            font-weight: bold;
-        }
-
-        .btn-print:hover {
-            background-color: #0a58ca;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(13, 110, 253, 0.3);
-        }
-
-        .btn-back {
-            background-color: #6c757d;
-            color: white;
-            font-weight: bold;
-        }
-
-        .btn-back:hover {
-            background-color: #5a6268;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(108, 117, 125, 0.3);
-        }
-
+        /* Pengaturan Cetak A5 */
         @page {
-            size: A4;
-            margin: 20mm 15mm;
+            size: A5 landscape;
+            margin: 10mm;
         }
 
         @media print {
@@ -222,51 +127,40 @@ if (!$h) {
             }
 
             .print-container {
-                box-shadow: none;
+                border: none;
+                width: 100%;
                 padding: 0;
-                border-radius: 0;
             }
 
-            .button-container {
+            .button-container, .no-print {
                 display: none !important;
-            }
-
-            .no-print {
-                display: none !important;
-            }
-
-            * {
-                box-shadow: none !important;
             }
         }
 
-        @media (max-width: 768px) {
-            .print-container {
-                padding: 20px;
-            }
-
-            .info-table {
-                width: 100%;
-            }
-
-            .sig-box,
-            .sig-box-right {
-                width: 100%;
-                float: none;
-                margin-bottom: 30px;
-            }
-
-            .title {
-                font-size: 16px;
-            }
+        /* Tombol Navigasi */
+        .button-container {
+            margin-top: 20px;
+            text-align: center;
+            display: flex;
+            gap: 10px;
+            justify-content: center;
         }
+        
+        .btn-custom {
+            padding: 8px 16px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+        }
+        .btn-print { background: #0d6efd; color: white; }
+        .btn-back { background: #6c757d; color: white; }
     </style>
 </head>
 <body>
 
 <div class="print-container">
-    <div class="company-name">PT MUTIARA CAHAYA PLASTINDO</div>
-
     <div class="title">PURCHASE ORDER</div>
 
     <table class="info-table">
@@ -305,7 +199,7 @@ if (!$h) {
                 <td style="text-align: right;"><?= rupiah($row['harga_kg']) ?></td>
             </tr>
             <?php } 
-            // Mengisi baris kosong agar total baris selalu 5
+            // Baris kosong dikurangi jadi 3 agar muat di A5 jika item sedikit
             for($i=$no; $i<=5; $i++){
                 echo "<tr><td style='text-align: center;'>$i.</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>";
             }
@@ -316,12 +210,12 @@ if (!$h) {
     <div class="signature-container">
         <div class="sig-box">
             <p>Diperiksa Oleh :</p>
-            <div class="name-tag">( ____________________ )</div> 
+            <div>( ____________________ )</div> 
         </div>
 
         <div class="sig-box-right">
             <p>Dibuat Oleh :</p>
-            <div class="name-tag">
+            <div>
                 ( <?= strtoupper(htmlspecialchars($h['created_by'])); ?> )
             </div>
         </div>
@@ -330,22 +224,13 @@ if (!$h) {
 </div>
 
 <div class="button-container no-print">
-    <button class="btn-print" onclick="window.print()" title="Cetak atau Simpan sebagai PDF">
-        🖨️ Cetak PO
+    <button class="btn-custom btn-print" onclick="window.print()">
+        🖨️ Cetak A5
     </button>
-    <a href="list_po.php" class="btn-back" title="Kembali ke daftar PO">
-        ← Kembali ke List PO
+    <a href="list_po.php" class="btn-custom btn-back">
+        ← Kembali
     </a>
 </div>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-    // Otomatis membuka dialog print saat halaman dimuat
-    window.addEventListener('load', function() {
-        // Uncomment baris di bawah jika ingin auto-print saat halaman load
-        // window.print();
-    });
-</script>
 
 </body>
 </html>

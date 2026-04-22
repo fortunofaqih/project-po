@@ -17,11 +17,11 @@ while($row = mysqli_fetch_assoc($query_customer)) {
 }
 
 // 2. QUERY DATA UNTUK TREN PO BULANAN (6 Bulan Terakhir)
-$query_bulanan = mysqli_query($conn, "SELECT DATE_FORMAT(tgl_order, '%M') as bulan, COUNT(*) as total 
+$query_bulanan = mysqli_query($conn, "SELECT DATE_FORMAT(tgl_order, '%M %Y') as bulan, COUNT(*) as total 
                                       FROM hed_po 
                                       WHERE tgl_order >= DATE_SUB(NOW(), INTERVAL 6 MONTH)
-                                      GROUP BY MONTH(tgl_order) 
-                                      ORDER BY tgl_order ASC");
+                                      GROUP BY DATE_FORMAT(tgl_order, '%Y-%m')
+                                      ORDER BY MIN(tgl_order) ASC");
 $labels_mth = [];
 $data_mth = [];
 while($row = mysqli_fetch_assoc($query_bulanan)) {

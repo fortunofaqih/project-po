@@ -81,6 +81,24 @@ while($row = mysqli_fetch_assoc($query_bulanan)) {
             </div>
         </div>
         <div class="col-md-3 mb-5">
+            <div class="card h-100 shadow-sm border-0 border-start border-info border-4">
+                <div class="card-body text-center">
+                    <div class="display-5 mb-2">📦</div>
+                    <h5>Export Excel</h5>
+                    <a href="export_form.php" class="btn btn-info btn-sm mt-2 text-white">Export</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-5">
+            <div class="card h-100 shadow-sm border-0 border-start border-secondary border-4">
+                <div class="card-body text-center">
+                    <div class="display-5 mb-2">👥</div>
+                    <h5>Master Customer</h5>
+                    <a href="master_customer.php" class="btn btn-secondary btn-sm mt-2">Kelola</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-5">
             <div class="card h-100 shadow-sm border-0 border-start border-warning border-4">
                 <div class="card-body text-center">
                     <div class="display-5 mb-2">🔐</div>

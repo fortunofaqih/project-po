@@ -20,12 +20,13 @@ if(isset($_POST['simpan'])){
         VALUES ('$no_po','$tgl','$customer','$user')
     ");
 
-    foreach($_POST['ukuran'] as $i => $u){
+   foreach($_POST['ukuran'] as $i => $u){
         if($u != ""){
-            // Pembersihan input untuk keamanan dasar
             $jml = $_POST['jml'][$i];
-            $harga = $_POST['harga'][$i];
-            $kg = $_POST['kg'][$i];
+            
+            // Simpan apa adanya agar "/M2" atau "/roll" tetap ada
+            $harga = mysqli_real_escape_string($conn, $_POST['harga'][$i]);
+            $kg = mysqli_real_escape_string($conn, $_POST['kg'][$i]);
 
             mysqli_query($conn, "
                 INSERT INTO det_po (no_po, ukuran, jml_order, harga, harga_kg) 
@@ -103,7 +104,15 @@ if(isset($_POST['simpan'])){
                             </div>
                             <div class="col-md-8">
                                 <label class="form-label fw-bold">👥 Nama Customer</label>
-                                <input type="text" name="customer" class="form-control" placeholder="Masukkan nama PT / Perorangan / Toko" required>
+                                <select name="customer" class="form-control" required>
+                                    <option value="">-- Pilih Customer --</option>
+                                    <?php
+                                    $qcust = mysqli_query($conn, "SELECT nama_customer FROM customer ORDER BY nama_customer");
+                                    while ($c = mysqli_fetch_assoc($qcust)) {
+                                        echo '<option value="'.htmlspecialchars($c['nama_customer']).'">'.htmlspecialchars($c['nama_customer']).'</option>';
+                                    }
+                                    ?>
+                                </select>
                             </div>
                         </div>
 
@@ -122,10 +131,10 @@ if(isset($_POST['simpan'])){
                                     <tbody>
                                         <?php for($i=0;$i<10;$i++){ ?>
                                         <tr>
-                                            <td><input type="text" name="ukuran[]" placeholder="Masukkan ukuran produk" title="Contoh: 50cm x 40cm x 30cm"></td>
+                                            <td><input type="text" name="ukuran[]" placeholder="Masukkan ukuran produk"></td>
                                             <td><input type="text" name="jml[]" class="text-center" placeholder="0" ></td>
-                                            <td><input type="text" name="harga[]" class="text-center" placeholder="0" ></td>
-                                            <td><input type="text" name="kg[]" class="text-center" placeholder="0" ></td>
+                                            <td><input type="text" name="harga[]" class="text-center rupiah-input" placeholder="Rp 0" ></td>
+                                            <td><input type="text" name="kg[]" class="text-center rupiah-input" placeholder="Rp 0" ></td>
                                         </tr>
                                         <?php } ?>
                                     </tbody>
@@ -157,6 +166,34 @@ if(isset($_POST['simpan'])){
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    document.querySelectorAll('.rupiah-input').forEach(input => {
+        input.addEventListener('input', function(e) {
+            let value = this.value;
+            
+            // Jika input kosong, abaikan
+            if (!value) return;
 
+            // Jika belum ada "Rp ", tambahkan di depan
+            if (!value.startsWith('Rp ')) {
+                value = 'Rp ' + value.replace('Rp ', '');
+            }
+
+            // Pisahkan bagian angka yang akan diformat dan bagian keterangan (satuan)
+            // Kita asumsikan angka ada di depan sebelum karakter non-angka/titik pertama setelah angka
+            // Contoh: "Rp 10000/roll" -> Angka: 10000, Sisa: /roll
+            
+            let parts = value.split('/');
+            let angkaPart = parts[0].replace(/[^0-9]/g, '');
+            let sisaPart = parts.length > 1 ? '/' + parts.slice(1).join('/') : '';
+
+            // Format angkaPart menjadi ribuan
+            if (angkaPart) {
+                let formattedAngka = new Intl.NumberFormat('id-ID').format(parseInt(angkaPart));
+                this.value = 'Rp ' + formattedAngka + sisaPart;
+            }
+        });
+    });
+</script>
 </body>
 </html>

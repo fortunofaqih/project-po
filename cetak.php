@@ -156,6 +156,15 @@ if (!$h) {
         }
         .btn-print { background: #0d6efd; color: white; }
         .btn-back { background: #6c757d; color: white; }
+        .btn-back { 
+                background: #dc3545; /* Merah untuk tombol tutup */
+                color: white; 
+            }
+
+            .btn-back:hover {
+                background: #bb2d3b;
+                box-shadow: 0 4px 8px rgba(220, 53, 69, 0.3);
+            }
     </style>
 </head>
 <body>
@@ -178,34 +187,35 @@ if (!$h) {
         </tr>
     </table>
 
-    <table class="main-table">
-        <thead>
-            <tr>
-                <th width="5%">No.</th>
-                <th>Ukuran / Deskripsi</th>
-                <th width="15%">Jml Order</th>
-                <th width="20%">Harga/Kg</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php 
-            $no = 1; 
-            while($row = mysqli_fetch_assoc($d)){ 
-            ?>
-            <tr>
-                <td style="text-align: center;"><?= $no++ ?>.</td>
-                <td><?= htmlspecialchars($row['ukuran']); ?></td>
-                <td style="text-align: center;"><?= htmlspecialchars($row['jml_order']); ?></td>
-                <td style="text-align: right;"><?= rupiah($row['harga_kg']) ?></td>
-            </tr>
-            <?php } 
-            // Baris kosong dikurangi jadi 3 agar muat di A5 jika item sedikit
-            for($i=$no; $i<=5; $i++){
-                echo "<tr><td style='text-align: center;'>$i.</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>";
-            }
-            ?>
-        </tbody>
-    </table>
+   <table class="main-table">
+    <thead>
+        <tr>
+            <th width="5%">No.</th>
+            <th>Ukuran / Deskripsi</th>
+            <th width="15%">Jml Order</th>
+            <th width="25%">Harga</th> <th width="20%">Harga/Kg</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php 
+        $no = 1; 
+        while($row = mysqli_fetch_assoc($d)){ 
+        ?>
+        <tr>
+            <td style="text-align: center;"><?= $no++ ?>.</td>
+            <td><?= htmlspecialchars($row['ukuran']); ?></td>
+            <td style="text-align: center;"><?= htmlspecialchars($row['jml_order']); ?></td>
+            <td style="text-align: right;"><?= htmlspecialchars($row['harga']); ?></td> 
+            <td style="text-align: right;"><?= htmlspecialchars($row['harga_kg']); ?></td>
+        </tr>
+        <?php } 
+        // Mengisi baris kosong agar estetika A5 tetap terjaga
+        for($i=$no; $i<=5; $i++){
+            echo "<tr><td style='text-align: center;'>$i.</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>";
+        }
+        ?>
+    </tbody>
+</table>
 
     <div class="signature-container">
         <div class="sig-box">
@@ -227,9 +237,9 @@ if (!$h) {
     <button class="btn-custom btn-print" onclick="window.print()">
         🖨️ Cetak A5
     </button>
-    <a href="list_po.php" class="btn-custom btn-back">
-        ← Kembali
-    </a>
+    <button class="btn-custom btn-back" onclick="window.close()">
+        ✖ Tutup Halaman
+    </button>
 </div>
 
 </body>

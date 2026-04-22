@@ -100,7 +100,7 @@ while($row = mysqli_fetch_assoc($q)) {
     $no_po_aktif = $d['no_po'];
 ?>
 <div class="modal fade" id="editModal<?= $d['id'] ?>" tabindex="-1" aria-labelledby="editModalLabel<?= $d['id'] ?>" aria-hidden="true" data-bs-backdrop="static">
-    <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header bg-warning text-dark">
                 <h5 class="modal-title fw-bold" id="editModalLabel<?= $d['id'] ?>">✏️ Edit PO: <?= htmlspecialchars($d['no_po']); ?></h5>
@@ -108,29 +108,31 @@ while($row = mysqli_fetch_assoc($q)) {
             </div>
             <form action="proses_edit_po.php" method="POST">
                 <div class="modal-body">
-                    <div class="row mb-3">
+                    <div class="row mb-4">
                         <div class="col-md-4">
-                            <label class="form-label fw-bold">Nomor PO</label>
+                            <label class="form-label fw-bold">📌 Nomor PO</label>
                             <input type="text" name="no_po" class="form-control bg-light" value="<?= htmlspecialchars($d['no_po']); ?>" readonly>
                         </div>
                         <div class="col-md-4">
-                            <label class="form-label fw-bold">Tanggal</label>
+                            <label class="form-label fw-bold">📅 Tanggal</label>
                             <input type="date" name="tgl" class="form-control" value="<?= $d['tgl_order'] ?>" required>
                         </div>
                         <div class="col-md-4">
-                            <label class="form-label fw-bold">Customer</label>
+                            <label class="form-label fw-bold">👥 Customer</label>
                             <input type="text" name="customer" class="form-control" value="<?= htmlspecialchars($d['customer']); ?>" required>
                         </div>
                     </div>
 
+                    <h6 class="fw-bold mb-2">📦 Detail Item Pesanan</h6>
                     <div class="table-responsive">
                         <table class="table table-sm table-bordered mb-0">
-                            <thead class="table-secondary text-center">
-                                <tr>
-                                    <th>Ukuran</th>
+                            <thead class="table-dark">
+                                <tr class="text-center">
+                                    <th style="width: 40%;">Ukuran / Produk</th>
                                     <th style="width: 15%;">Jumlah</th>
-                                    <th style="width: 20%;">Harga</th>
-                                    <th style="width: 15%;">Kg</th>
+                                    <th style="width: 20%;">Harga (Rp)</th>
+                                    <th style="width: 15%;">Harga/Kg</th>
+                                    <th style="width: 10%;">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -141,28 +143,28 @@ while($row = mysqli_fetch_assoc($q)) {
                                 ?>
                                 <tr>
                                     <td>
-                                        <div class="input-group input-group-sm">
-                                            <button class="btn btn-outline-danger btn-sm" type="button" onclick="hapusBaris(this)">×</button>
-                                            <input type="text" name="ukuran[]" class="form-control form-control-sm" value="<?= htmlspecialchars($det['ukuran']); ?>">
-                                        </div>
+                                        <input type="text" name="ukuran[]" class="form-control form-control-sm" value="<?= htmlspecialchars($det['ukuran']); ?>">
                                     </td>
                                     <td><input type="text" name="jml[]" class="form-control form-control-sm text-center" value="<?= htmlspecialchars($det['jml_order']); ?>" step="0.01"></td>
                                     <td><input type="text" name="harga[]" class="form-control form-control-sm text-center" value="<?= htmlspecialchars($det['harga']); ?>" step="0.01"></td>
                                     <td><input type="text" name="kg[]" class="form-control form-control-sm text-center" value="<?= htmlspecialchars($det['harga_kg']); ?>" step="0.01"></td>
+                                    <td class="text-center">
+                                        <button class="btn btn-outline-danger btn-sm" type="button" onclick="hapusBaris(this)" title="Kosongkan baris">×</button>
+                                    </td>
                                 </tr>
                                 <?php $count++; } ?>
                                 
                                 <?php for($i=$count; $i<8; $i++){ ?>
                                 <tr>
                                     <td>
-                                        <div class="input-group input-group-sm">
-                                            <button class="btn btn-outline-danger btn-sm" type="button" onclick="hapusBaris(this)">×</button>
-                                            <input type="text" name="ukuran[]" class="form-control form-control-sm" placeholder="...">
-                                        </div>
+                                        <input type="text" name="ukuran[]" class="form-control form-control-sm" placeholder="Masukkan ukuran produk">
                                     </td>
-                                    <td><input type="text" name="jml[]" class="form-control form-control-sm text-center" ></td>
-                                    <td><input type="text" name="harga[]" class="form-control form-control-sm text-center" ></td>
-                                    <td><input type="text" name="kg[]" class="form-control form-control-sm text-center" ></td>
+                                    <td><input type="text" name="jml[]" class="form-control form-control-sm text-center" placeholder="0"></td>
+                                    <td><input type="text" name="harga[]" class="form-control form-control-sm text-center" placeholder="Rp 0"></td>
+                                    <td><input type="text" name="kg[]" class="form-control form-control-sm text-center" placeholder="Rp 0"></td>
+                                    <td class="text-center">
+                                        <button class="btn btn-outline-danger btn-sm" type="button" onclick="hapusBaris(this)" title="Kosongkan baris">×</button>
+                                    </td>
                                 </tr>
                                 <?php } ?>
                             </tbody>

@@ -120,7 +120,7 @@ if(isset($_POST['simpan'])){
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <?php for($i=0;$i<8;$i++){ ?>
+                                        <?php for($i=0;$i<10;$i++){ ?>
                                         <tr>
                                             <td><input type="text" name="ukuran[]" placeholder="Masukkan ukuran produk" title="Contoh: 50cm x 40cm x 30cm"></td>
                                             <td><input type="text" name="jml[]" class="text-center" placeholder="0" ></td>
